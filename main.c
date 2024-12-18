@@ -13,6 +13,7 @@ typedef enum {
 } UnidadeDeDados;
 
 void exibirMenu();
+void converterTamanhoDeDados(uint64_t valor, UnidadeDeDados inicial, UnidadeDeDados final);
 
 int main() {
     int escolha;
@@ -48,3 +49,21 @@ void exibirMenu() {
     printf("=================================\n");
 }
 
+// Função de conversão de tamanho de dados
+void converterTamanhoDeDados(uint64_t valor, UnidadeDeDados inicial, UnidadeDeDados final) {
+    const uint64_t fator = 1024; 
+
+    int diferencaDeNiveis = inicial - final;
+
+    if (diferencaDeNiveis > 0) {
+        while (diferencaDeNiveis-- > 0) {
+            valor /= fator;
+        }
+    } else if (diferencaDeNiveis < 0) {
+        while (diferencaDeNiveis++ < 0) {
+            valor *= fator;
+        }
+    }
+
+    return valor;
+}
