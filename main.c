@@ -1,5 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+
+// Enumeração para as unidades
+typedef enum {
+    BIT,
+    BYTE,
+    KILOBYTE,
+    MEGABYTE,
+    GIGABYTE,
+    TERABYTE
+} UnidadeDeDados;
 
 void exibirMenu();
 
