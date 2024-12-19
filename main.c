@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 
-// Enumeração para as unidades
+// Definição das constantes de conversão de tamanho de dados
+#define BIT_TO_BYTE 0.125
+#define KB_TO_BYTE 1024
+#define MB_TO_BYTE (1024 * 1024)
+#define GB_TO_BYTE (1024 * 1024 * 1024)
+#define TB_TO_BYTE (1024LL * 1024 * 1024 * 1024)
+
+// Enumeração para as unidades de tamanho de dados
 typedef enum {
     BIT,
     BYTE,
@@ -13,7 +19,8 @@ typedef enum {
 } UnidadeDeDados;
 
 void exibirMenu();
-void converterTamanhoDeDados(uint64_t valor, UnidadeDeDados inicial, UnidadeDeDados final);
+double converterTamanhoDeDados(double valor, UnidadeDeDados inicial, UnidadeDeDados final);
+const char* obterUnidadeDados(UnidadeDeDados unidade);
 
 int main() {
     int escolha;
@@ -21,11 +28,43 @@ int main() {
     do {
         exibirMenu();
 
-        printf("Escolha uma opcao (0 para sair): ");
+        printf("Escolha uma opcao (0 para sair): \n");
         scanf("%d", &escolha);
 
-        if (escolha != 0) {
-            printf('Obrigado por escolher a opcao');
+        switch (escolha)
+        {
+        case 1: //Conversão de comprimento
+            break;
+        case 2: //Conversão de massa
+            break;
+        case 3: //Conversão de volume
+            break;
+        case 4: //Conversão de temperatura
+            break;
+        case 5: //Conversão de velocidade
+            break;
+        case 6: //Conversão de potência
+            break;
+        case 7: //Conversão de área
+            break;
+        case 8: //Conversão de tempo
+            break;
+        case 9: // Conversão de tamanho de dados
+            double valor;
+            int inicial, final;
+
+            printf("Digite o valor para ser convertido: \n");
+            scanf("%lf", &valor);
+            printf("Digite a unidade inicial (0 - bit, 1 - byte, 2 - kilobyte, 3 - megabyte, 4 - gigabyte, 5 - terabyte): \n");
+            scanf("%d", &inicial);
+            printf("Digite a unidade final   (0 - bit, 1 - byte, 2 - kilobyte, 3 - megabyte, 4 - gigabyte, 5 - terabyte): \n");
+            scanf("%d", &final);
+            double resultado = converterTamanhoDeDados(valor, inicial, final);
+            if (resultado != -1)
+                printf("%.3f %s equivale a %.3f %s\n", valor, obterUnidadeDados(inicial), resultado, obterUnidadeDados(final));
+            break;
+        default:
+            break;
         }
 
     } while (escolha != 0);
@@ -49,21 +88,80 @@ void exibirMenu() {
     printf("=================================\n");
 }
 
-// Função de conversão de tamanho de dados
-void converterTamanhoDeDados(uint64_t valor, UnidadeDeDados inicial, UnidadeDeDados final) {
-    const uint64_t fator = 1024; 
+// Função para converter o tamanho de dados entre diferentes unidades
+double converterTamanhoDeDados(double valor, UnidadeDeDados inicial, UnidadeDeDados final) {
+    double bytes, resultado;
 
-    int diferencaDeNiveis = inicial - final;
-
-    if (diferencaDeNiveis > 0) {
-        while (diferencaDeNiveis-- > 0) {
-            valor /= fator;
-        }
-    } else if (diferencaDeNiveis < 0) {
-        while (diferencaDeNiveis++ < 0) {
-            valor *= fator;
-        }
+    switch (inicial)
+    {
+    case 0:
+        valor *= BIT_TO_BYTE;
+        break;
+    case 1:
+        break;
+    case 2:
+        valor *= KB_TO_BYTE;
+        break;
+    case 3:
+        valor *= MB_TO_BYTE;
+        break;
+    case 4:
+        valor *= GB_TO_BYTE;
+        break;
+    case 5:
+        valor *= TB_TO_BYTE;
+        break;
+    default:
+        printf("Unidade inicial inválida.\n");
+        resultado = -1;
+        break;
     }
 
-    return valor;
+    switch (final)
+    {
+        case 0:
+            resultado = valor / BIT_TO_BYTE;
+            break;
+        case 1:
+            resultado = valor;
+            break;
+        case 2:
+            resultado = valor / KB_TO_BYTE;
+            break;
+        case 3:
+            resultado = valor / MB_TO_BYTE;
+            break;
+        case 4:
+            resultado = valor / GB_TO_BYTE;
+            break;
+        case 5:
+            resultado = valor / TB_TO_BYTE;
+            break;
+        default:
+            printf("Unidade final inválida.\n");
+            resultado = -1;
+            break;
+    }
+
+    return resultado;
+}
+
+// Função para obter o nome da unidade de tamanho de dados
+const char* obterUnidadeDados(UnidadeDeDados unidade) {
+    switch (unidade) {
+    case BIT:
+        return "bits";
+    case BYTE:
+        return "bytes";
+    case KILOBYTE:
+        return "kilobytes";
+    case MEGABYTE:
+        return "megabytes";
+    case GIGABYTE:
+        return "gigabytes";
+    case TERABYTE:
+        return "terabytes";
+    default:
+        return "Unidade desconhecida";
+    }
 }
