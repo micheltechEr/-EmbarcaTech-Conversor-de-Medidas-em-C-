@@ -18,9 +18,17 @@ typedef enum {
     TERABYTE
 } UnidadeDeDados;
 
+typedef enum{
+    LITRO,
+    MILILITRO,
+    METROSCUBICOS
+}UnidadeDeVolume;
+
 void exibirMenu();
 double converterTamanhoDeDados(double valor, UnidadeDeDados inicial, UnidadeDeDados final);
 const char* obterUnidadeDados(UnidadeDeDados unidade);
+double converterVolume(double valor, int inicial, int final);
+const char* obterUnidadeVolume(UnidadeDeVolume unidade);
 
 int main() {
     int escolha;
@@ -31,6 +39,9 @@ int main() {
         printf("Escolha uma opcao (0 para sair): \n");
         scanf("%d", &escolha);
 
+        double valor, resultado;
+        int inicial, final;
+
         switch (escolha)
         {
         case 1: //Conversão de comprimento
@@ -38,6 +49,15 @@ int main() {
         case 2: //Conversão de massa
             break;
         case 3: //Conversão de volume
+            printf("Digite o valor para ser convertido: \n");
+            scanf("%lf", &valor);
+            printf("Digite a unidade inicial (0 - litro, 1 - mililitro, 2 - metro cúbico): \n");
+            scanf("%d", &inicial);
+            printf("Digite a unidade final   (0 - litro, 1 - mililitro, 2 - metro cúbico): \n");
+            scanf("%d", &final);
+            resultado = converterVolume(valor, inicial, final);
+            if (resultado != -1)
+                printf("%.3f %s equivale a %.3f %s\n", valor, obterUnidadeVolume(inicial), resultado, obterUnidadeVolume(final));
             break;
         case 4: //Conversão de temperatura
             break;
@@ -59,7 +79,7 @@ int main() {
             scanf("%d", &inicial);
             printf("Digite a unidade final   (0 - bit, 1 - byte, 2 - kilobyte, 3 - megabyte, 4 - gigabyte, 5 - terabyte): \n");
             scanf("%d", &final);
-            double resultado = converterTamanhoDeDados(valor, inicial, final);
+            resultado = converterTamanhoDeDados(valor, inicial, final);
             if (resultado != -1)
                 printf("%.3f %s equivale a %.3f %s\n", valor, obterUnidadeDados(inicial), resultado, obterUnidadeDados(final));
             break;
@@ -161,6 +181,60 @@ const char* obterUnidadeDados(UnidadeDeDados unidade) {
         return "gigabytes";
     case TERABYTE:
         return "terabytes";
+    default:
+        return "Unidade desconhecida";
+    }
+}
+
+// Função para converter o volume entre diferentes unidades
+double converterVolume(double valor, int inicial, int final) {
+    double resultado;
+
+    switch (inicial)
+    {
+    case 0:
+        break;
+    case 1:
+        valor /= 1000;
+        break;
+    case 2:
+        valor *= 1000;
+        break;
+    default:
+        printf("Unidade inicial inválida.\n");
+        resultado = -1;
+        break;
+    }
+
+    switch (final)
+    {
+    case 0:
+        resultado = valor;
+        break;
+    case 1:
+        resultado = valor * 1000;
+        break;
+    case 2:
+        resultado = valor / 1000;
+        break;
+    default:
+        printf("Unidade final inválida.\n");
+        resultado = -1;
+        break;
+    }
+
+    return resultado;
+}
+
+// Função para obter o nome da unidade de volume
+const char* obterUnidadeVolume(UnidadeDeVolume unidade) {
+    switch (unidade) {
+    case LITRO:
+        return "litros";
+    case MILILITRO:
+        return "mililitros";
+    case METROSCUBICOS:
+        return "metros cúbicos";
     default:
         return "Unidade desconhecida";
     }
