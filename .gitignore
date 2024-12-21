@@ -1,0 +1,4 @@
+# Ignorar as seguintes pastas
+.vscode
+output
+.exe
