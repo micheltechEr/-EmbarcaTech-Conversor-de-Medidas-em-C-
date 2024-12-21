@@ -1,0 +1,7 @@
+# Ignorar a pasta de saída
+output/
+
+# Arquivos binários
+*.exe
+*.out
+*.o
