@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ignorar a pasta de saída
 output/
 
@@ -5,3 +6,9 @@ output/
 *.exe
 *.out
 *.o
+=======
+# Ignorar as seguintes pastas
+.vscode
+output
+.exe
+>>>>>>> main
