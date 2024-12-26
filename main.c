@@ -50,6 +50,19 @@ typedef enum{
 	CAVALOS_VAPOR
 }UnidadeDePotencia;
 
+//Enumeração para as unidades de área
+typedef enum{
+	METROS_QUADRADOS,
+	CENTIMETROS_QUADRADOS
+}UnidadeDeArea;
+
+//Enumeração para as unidades de tempo
+typedef enum{
+	SEGUNDOS,
+	MINUTOS,
+	HORAS
+}UnidadeDeTempo;
+
 // Enumeração para as unidades de tamanho de dados
 typedef enum {
     BIT,
@@ -73,6 +86,10 @@ double converterVelocidade(double valor, UnidadeDeVelocidade inicial, UnidadeDeV
 const char* obterUnidadeVelocidade(UnidadeDeVelocidade unidade);
 double converterPotencia(double valor, UnidadeDePotencia inicial, UnidadeDePotencia final);
 const char* obterUnidadePotencia(UnidadeDePotencia unidade);
+double converterArea(double valor, UnidadeDeArea inicial, UnidadeDeArea final);
+const char* obterUnidadeArea(UnidadeDeArea unidade);
+double converterTempo(double valor, UnidadeDeTempo inicial, UnidadeDeTempo final);
+const char* obterUnidadeTempo(UnidadeDeTempo unidade);
 double converterDados(double valor, UnidadeDeDados inicial, UnidadeDeDados final);
 const char* obterUnidadeDados(UnidadeDeDados unidade);
 
@@ -510,6 +527,95 @@ const char* obterUnidadePotencia(UnidadeDePotencia unidade) {
         case CAVALOS_VAPOR: 
            return "cavalos-vapor";
         default:
+           return "unidade desconhecida";
+    }
+}
+
+// Função para converter a área entre diferentes unidades
+double converterArea(double valor, UnidadeDeArea inicial, UnidadeDeArea final) {
+    double resultado;
+    switch (inicial) {
+        case METROS_QUADRADOS:
+            break;
+        case CENTIMETROS_QUADRADOS:
+            valor /= 10000; 
+            break;
+        default:
+            printf("Unidade inicial invalida.\n");
+            return -1;
+    }
+
+    switch (final) {
+        case METROS_QUADRADOS:
+            resultado = valor;
+            break;
+        case CENTIMETROS_QUADRADOS:
+            resultado = valor * 10000;
+            break;
+        default:
+            printf("Unidade final invalida.\n");
+            return -1;
+    }
+    
+    return resultado;
+}
+
+// Função para obter o nome da unidade de área
+const char* obterUnidadeArea(UnidadeDeArea unidade) {
+    switch (unidade) {
+        case METROS_QUADRADOS: 
+           return "metros quadrados";
+        case CENTIMETROS_QUADRADOS: 
+           return "centimetros quadrados";
+        default: 
+           return "unidade desconhecida";
+    }
+}
+// Função para converter o tempo entre diferentes unidades
+double converterTempo(double valor, UnidadeDeTempo inicial, UnidadeDeTempo final) {
+    double resultado;
+    switch (inicial) {
+        case SEGUNDOS:
+            break;
+        case MINUTOS:
+            valor *= 60;
+            break;
+        case HORAS:
+            valor *= 3600; 
+            break;
+        default:
+            printf("Unidade inicial invalida.\n");
+            return -1;
+    }
+
+    switch (final) {
+        case SEGUNDOS:
+            resultado = valor;
+            break;
+        case MINUTOS:
+            resultado = valor / 60;
+            break;
+        case HORAS:
+            resultado = valor / 3600;
+            break;
+        default:
+            printf("Unidade final invalida.\n");
+            return -1;
+    }
+    
+    return resultado;
+}
+
+// Função para obter o nome da unidade de tempo
+const char* obterUnidadeTempo(UnidadeDeTempo unidade) {
+    switch (unidade) {
+        case SEGUNDOS: 
+           return "segundos";
+        case MINUTOS: 
+           return "minutos";
+        case HORAS: 
+           return "horas";
+        default: 
            return "unidade desconhecida";
     }
 }
