@@ -43,6 +43,13 @@ typedef enum{
 	MILHAS_POR_HORA
 }UnidadeDeVelocidade;
 
+//Enumeração para as unidades de potência
+typedef enum{
+	WATTS,
+	QUILOWATTS,
+	CAVALOS_VAPOR
+}UnidadeDePotencia;
+
 // Enumeração para as unidades de tamanho de dados
 typedef enum {
     BIT,
@@ -64,6 +71,8 @@ double converterTemperatura(double valor, UnidadeDeTemperatura inicial, UnidadeD
 const char* obterUnidadeTemperatura(UnidadeDeTemperatura unidade);
 double converterVelocidade(double valor, UnidadeDeVelocidade inicial, UnidadeDeVelocidade final);
 const char* obterUnidadeVelocidade(UnidadeDeVelocidade unidade);
+double converterPotencia(double valor, UnidadeDePotencia inicial, UnidadeDePotencia final);
+const char* obterUnidadePotencia(UnidadeDePotencia unidade);
 double converterDados(double valor, UnidadeDeDados inicial, UnidadeDeDados final);
 const char* obterUnidadeDados(UnidadeDeDados unidade);
 
@@ -452,6 +461,55 @@ const char* obterUnidadeVelocidade(UnidadeDeVelocidade unidade) {
         case MILHAS_POR_HORA: 
            return "mph";
         default: 
+           return "unidade desconhecida";
+    }
+}
+
+// Função para converter a potência entre diferentes unidades
+double converterPotencia(double valor, UnidadeDePotencia inicial, UnidadeDePotencia final) {
+    double resultado;
+    switch (inicial) {
+        case WATTS:
+            break;
+        case QUILOWATTS:
+            valor *= 1000;
+            break;
+        case CAVALOS_VAPOR:
+            valor *= 735.5; 
+            break;
+        default:
+            printf("Unidade inicial invalida.\n");
+            return -1;
+    }
+
+    switch (final) {
+        case WATTS:
+            resultado = valor;
+            break;
+        case QUILOWATTS:
+            resultado = valor / 1000;
+            break;
+        case CAVALOS_VAPOR:
+            resultado = valor / 735.5;
+            break;
+        default:
+            printf("Unidade final invalida.\n");
+            return -1;
+    }
+    
+    return resultado;
+}
+
+// Função para obter o nome da unidade de potência
+const char* obterUnidadePotencia(UnidadeDePotencia unidade) {
+    switch (unidade) {
+        case WATTS: 
+           return "watts";
+        case QUILOWATTS: 
+           return "kilowatts";
+        case CAVALOS_VAPOR: 
+           return "cavalos-vapor";
+        default:
            return "unidade desconhecida";
     }
 }
