@@ -36,6 +36,13 @@ typedef enum{
 	KELVIN
 }UnidadeDeTemperatura;
 
+//Enumeração para as unidades de velocidade
+typedef enum{
+	KILOMETROS_POR_HORA,
+	METROS_POR_SEGUNDO,
+	MILHAS_POR_HORA
+}UnidadeDeVelocidade;
+
 // Enumeração para as unidades de tamanho de dados
 typedef enum {
     BIT,
@@ -55,6 +62,8 @@ double converterVolume(double valor, int inicial, int final);
 const char* obterUnidadeVolume(UnidadeDeVolume unidade);
 double converterTemperatura(double valor, UnidadeDeTemperatura inicial, UnidadeDeTemperatura final);
 const char* obterUnidadeTemperatura(UnidadeDeTemperatura unidade);
+double converterVelocidade(double valor, UnidadeDeVelocidade inicial, UnidadeDeVelocidade final);
+const char* obterUnidadeVelocidade(UnidadeDeVelocidade unidade);
 double converterDados(double valor, UnidadeDeDados inicial, UnidadeDeDados final);
 const char* obterUnidadeDados(UnidadeDeDados unidade);
 
@@ -395,6 +404,55 @@ const char* obterUnidadeTemperatura(UnidadeDeTemperatura unidade) {
         return "Kelvin";
     default:
         return "Unidade desconhecida";
+    }
+}
+
+// Função para converter a velocidade entre diferentes unidades
+double converterVelocidade(double valor, UnidadeDeVelocidade inicial, UnidadeDeVelocidade final) {
+    double resultado;
+    switch (inicial) {
+        case METROS_POR_SEGUNDO:
+            break;
+        case KILOMETROS_POR_HORA:
+            valor /= 3.6; 
+            break;
+        case MILHAS_POR_HORA:
+            valor *= 0.44704; 
+            break;
+        default:
+            printf("Unidade inicial invalida.\n");
+            return -1;
+    }
+
+    switch (final) {
+        case METROS_POR_SEGUNDO:
+            resultado = valor;
+            break;
+        case KILOMETROS_POR_HORA:
+            resultado = valor * 3.6;
+            break;
+        case MILHAS_POR_HORA:
+            resultado = valor / 0.44704;
+            break;
+        default:
+            printf("Unidade final invalida.\n");
+            return -1;
+    }
+    
+    return resultado;
+}
+
+// Função para obter o nome da unidade de velocidade
+const char* obterUnidadeVelocidade(UnidadeDeVelocidade unidade) {
+    switch (unidade) {
+        case METROS_POR_SEGUNDO: 
+           return "m/s";
+        case KILOMETROS_POR_HORA: 
+           return "km/h";
+        case MILHAS_POR_HORA: 
+           return "mph";
+        default: 
+           return "unidade desconhecida";
     }
 }
 
