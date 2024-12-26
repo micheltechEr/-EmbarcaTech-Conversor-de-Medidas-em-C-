@@ -95,13 +95,8 @@ const char* obterUnidadeDados(UnidadeDeDados unidade);
 
 int main() {
     int escolha;
-    float valor;
-    float resultado;
 
     do {
-
-        printf("Digite o numero desejado\n");
-        scanf("%f", &valor);
 
         exibirMenu();
 
@@ -111,8 +106,7 @@ int main() {
         double valor, resultado;
         int inicial, final;
 
-        switch (escolha)
-        {
+        switch (escolha){
         case 1: //Conversão de comprimento
            printf("Digite o valor para ser convertido: \n");
             scanf("%lf", &valor);
