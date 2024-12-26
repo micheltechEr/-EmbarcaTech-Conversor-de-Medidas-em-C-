@@ -29,6 +29,13 @@ typedef enum{
     METROSCUBICOS
 }UnidadeDeVolume;
 
+//Enumeração para as unidades de temperatura
+typedef enum{
+	CELSIUS,
+	FAHRENHEIT,
+	KELVIN
+}UnidadeDeTemperatura;
+
 // Enumeração para as unidades de tamanho de dados
 typedef enum {
     BIT,
@@ -46,6 +53,8 @@ double converterMassa(double valor, UnidadeDeMassa inicial, UnidadeDeMassa final
 const char* obterUnidadeMassa(UnidadeDeMassa unidade);
 double converterVolume(double valor, int inicial, int final);
 const char* obterUnidadeVolume(UnidadeDeVolume unidade);
+double converterTemperatura(double valor, UnidadeDeTemperatura inicial, UnidadeDeTemperatura final);
+const char* obterUnidadeTemperatura(UnidadeDeTemperatura unidade);
 double converterDados(double valor, UnidadeDeDados inicial, UnidadeDeDados final);
 const char* obterUnidadeDados(UnidadeDeDados unidade);
 
@@ -303,8 +312,7 @@ double converterVolume(double valor, int inicial, int final) {
         break;
     default:
         printf("Unidade inicial inválida.\n");
-        resultado = -1;
-        break;
+        return -1;
     }
 
     switch (final)
@@ -320,8 +328,7 @@ double converterVolume(double valor, int inicial, int final) {
         break;
     default:
         printf("Unidade final inválida.\n");
-        resultado = -1;
-        break;
+        return -1;
     }
 
     return resultado;
@@ -336,6 +343,56 @@ const char* obterUnidadeVolume(UnidadeDeVolume unidade) {
         return "mililitros";
     case METROSCUBICOS:
         return "metros cúbicos";
+    default:
+        return "Unidade desconhecida";
+    }
+}
+
+// Função para converter temperatura entre diferentes unidades
+double converterTemperatura(double valor, UnidadeDeTemperatura inicial, UnidadeDeTemperatura final) {
+    double resultado;
+
+    switch (inicial) {
+    case CELSIUS:
+        valor += 273.15;
+        break;
+    case FAHRENHEIT:
+        valor = (valor - 32) * 5 / 9 + 273.15;
+        break;
+    case KELVIN:
+        break;
+    default:
+        printf("Unidade inicial invalida.\n");
+        return -1;
+    }
+
+    switch (final) {
+    case CELSIUS:
+        resultado = valor - 273.15;
+        break;
+    case FAHRENHEIT:
+        resultado = (valor - 273.15) * 9 / 5 + 32;
+        break;
+    case KELVIN:
+        resultado = valor;
+        break;
+    default:
+        printf("Unidade final invalida.\n");
+        return -1;
+    }
+    
+    return resultado;
+}
+
+// Função para obter o nome da unidade de temperatura
+const char* obterUnidadeTemperatura(UnidadeDeTemperatura unidade) {
+    switch (unidade) {
+    case CELSIUS:
+        return "Celsius";
+    case FAHRENHEIT:
+        return "Fahrenheit";
+    case KELVIN:
+        return "Kelvin";
     default:
         return "Unidade desconhecida";
     }
