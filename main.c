@@ -95,8 +95,14 @@ const char* obterUnidadeDados(UnidadeDeDados unidade);
 
 int main() {
     int escolha;
+    float valor;
+    float resultado;
 
     do {
+
+        printf("Digite o numero desejado\n");
+        scanf("%f", &valor);
+
         exibirMenu();
 
         printf("Escolha uma opcao (0 para sair): \n");
@@ -208,6 +214,7 @@ int main() {
             break;
         default:
             break;
+
         }
 
     } while (escolha != 0);
