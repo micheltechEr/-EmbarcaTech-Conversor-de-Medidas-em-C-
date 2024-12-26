@@ -15,6 +15,13 @@ typedef enum{
     MILIMETROS
 }UnidadeDeComprimento;
 
+//Enumeração para as unidades de massa
+typedef enum{
+	QUILOGRAMA,
+	GRAMA,
+	TONELADA
+}UnidadeDeMassa;
+
 //Enumeração para as unidades de volume
 typedef enum{
     LITRO,
@@ -35,6 +42,8 @@ typedef enum {
 void exibirMenu();
 double converterComprimento(double valor, UnidadeDeComprimento inicial, UnidadeDeComprimento final);
 const char* obterUnidadeComprimento(UnidadeDeComprimento unidade);
+double converterMassa(double valor, UnidadeDeMassa inicial, UnidadeDeMassa final);
+const char* obterUnidadeMassa(UnidadeDeMassa unidade);
 double converterVolume(double valor, int inicial, int final);
 const char* obterUnidadeVolume(UnidadeDeVolume unidade);
 double converterDados(double valor, UnidadeDeDados inicial, UnidadeDeDados final);
@@ -223,6 +232,56 @@ const char* obterUnidadeComprimento(UnidadeDeComprimento unidade) {
         return "centímetros";
     case MILIMETROS:
         return "milímetros";
+    default:
+        return "Unidade desconhecida";
+    }
+}
+
+// Função para converter a massa entre diferentes unidades
+double converterMassa(double valor, UnidadeDeMassa inicial, UnidadeDeMassa final) {
+    double resultado;
+
+    switch (inicial) {
+    case QUILOGRAMA:
+        break;
+    case GRAMA:
+        valor /= 1000;
+        break;
+    case TONELADA:
+        valor *= 1000;
+        break;
+    default:
+        printf("Unidade inicial invalida.\n");
+        return -1;
+    }
+
+    switch (final) {
+    case QUILOGRAMA:
+        resultado = valor;
+        break;
+    case GRAMA:
+        resultado = valor * 1000;
+        break;
+    case TONELADA:
+        resultado = valor / 1000;
+        break;
+    default:
+        printf("Unidade final invalida.\n");
+        return -1;
+    }
+    
+    return resultado;
+}
+
+// Função para obter o nome da unidade de massa
+const char* obterUnidadeMassa(UnidadeDeMassa unidade) {
+    switch (unidade) {
+    case QUILOGRAMA:
+        return "quilogramas";
+    case GRAMA:
+        return "gramas";
+    case TONELADA:
+        return "toneladas";
     default:
         return "Unidade desconhecida";
     }
