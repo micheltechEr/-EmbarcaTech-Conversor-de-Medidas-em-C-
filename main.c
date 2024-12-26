@@ -571,6 +571,7 @@ const char* obterUnidadeArea(UnidadeDeArea unidade) {
            return "unidade desconhecida";
     }
 }
+
 // Função para converter o tempo entre diferentes unidades
 double converterTempo(double valor, UnidadeDeTempo inicial, UnidadeDeTempo final) {
     double resultado;
